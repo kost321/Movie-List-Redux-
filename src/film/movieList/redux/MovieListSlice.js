@@ -10,20 +10,20 @@ import {
   addPostFromServer,
 } from "./GetMovieListAPI";
 
-
 const initialState = {
   posts: [],
   loading: true,
   currentFilter: "",
   currentSort: "",
-  // Спросить про posts.length
   currentCountMovie: 0,
   currentMovie: "",
+  totalCount: 0,
+  numberOfPage: 1,
 };
 
-export const getPosts = createAsyncThunk("posts/getPosts", async () => {
-  const posts = await getPostsFromServer();
-  return posts;
+export const getPosts = createAsyncThunk("posts/getPosts", async (count) => {
+  const response = await getPostsFromServer(count);
+  return response;
 });
 
 export const deletePost = createAsyncThunk(
@@ -104,6 +104,9 @@ export const movieSlice = createSlice({
     setSort: (state, action) => {
       state.currentSort = action.payload;
     },
+    setNumberOfPage: (state, action) => {
+      state.numberOfPage = action.payload;
+    },
   },
   extraReducers: {
     [getPosts.pending]: (state) => {
@@ -111,8 +114,9 @@ export const movieSlice = createSlice({
     },
     [getPosts.fulfilled]: (state, action) => {
       state.loading = false;
-      state.posts = action.payload;
+      state.posts = action.payload.data;
       state.currentCountMovie = action.payload.length;
+      state.totalCount = action.payload.totalAmount;
     },
     [getPosts.rejected]: (state) => {
       state.loading = false;
@@ -172,6 +176,7 @@ export const {
   movieNotFound,
   deleteMovie,
   notFoundMovie,
+  setNumberOfPage,
 } = movieSlice.actions;
 
 export default movieSlice.reducer;

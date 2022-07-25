@@ -1,12 +1,15 @@
-export const getPostsFromServer = async () => {
-  const response = await fetch("http://localhost:4000/movies");
+import { COUNT_OF_ITEMS_ON_PAGE } from "../../../constants";
+
+export const getPostsFromServer = async (count) => {
+  const response = await fetch(
+    `http://localhost:4000/movies?offset=${count}&limit=${COUNT_OF_ITEMS_ON_PAGE}`
+  );
   const responseInJson = await response.json();
-  const posts = responseInJson.data;
-  return posts;
+  return responseInJson;
 };
 
 export const getPostsFromServerFilter = async (filter) => {
-  const response = await fetch(`http://localhost:4000/movies?filter=${filter}`);
+  const response = await fetch(`http://localhost:4000/movies?filter=${filter}&limit=${COUNT_OF_ITEMS_ON_PAGE}`);
   const responseInJson = await response.json();
   const posts = responseInJson.data;
   return posts;
@@ -14,7 +17,7 @@ export const getPostsFromServerFilter = async (filter) => {
 
 export const getPostsFromServerSort = async (typeOrder, currentFilter) => {
   const response = await fetch(
-    `http://localhost:4000/movies?sortBy=release_date&sortOrder=${typeOrder}&filter=${currentFilter}`
+    `http://localhost:4000/movies?sortBy=vote_average&sortOrder=${typeOrder}&filter=${currentFilter}&limit=${COUNT_OF_ITEMS_ON_PAGE}`
   );
   const responseInJson = await response.json();
   const posts = responseInJson.data;
@@ -23,7 +26,7 @@ export const getPostsFromServerSort = async (typeOrder, currentFilter) => {
 
 export const getPostsFromServerSearch = async (value) => {
   const response = await fetch(
-    `http://localhost:4000/movies?search=${value}%20&searchBy=title`
+    `http://localhost:4000/movies?search=${value}%20&searchBy=title&limit=${COUNT_OF_ITEMS_ON_PAGE}`
   );
   const responseInJson = await response.json();
   const posts = responseInJson.data;
@@ -51,7 +54,7 @@ export const editPostFromServer = async (paramDispatch) => {
       overview: paramDispatch.valueOverview,
       runtime: +paramDispatch.valueRuntime,
       id: paramDispatch.id,
-      genres: [paramDispatch.valueGenres],
+      genres:[paramDispatch.valueGenres],
     }),
   };
   const response = await fetch(`http://localhost:4000/movies`, requestOptions);

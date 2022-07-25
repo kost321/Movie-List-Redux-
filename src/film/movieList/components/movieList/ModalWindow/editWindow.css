@@ -1,35 +1,30 @@
-.container__input {
-  position: fixed;
-  overflow: hidden;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  flex-direction: column;
-  color: brown;
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(rgba(60, 58, 58, 0.7), rgba(0, 0, 0, 0.7));
-  animation-name: appear;
-  animation-duration: 300ms;
+
+
+.modal-window__close_icon-edit {
+  position: relative;
+  cursor: pointer;
+  left: 210px;
 }
-.block__input{
-  background: rgba(0, 0, 0, 0.7);
-  width: 300px;
-  height: 400px;
+
+.modal__window-small {
+  left: 50px;
+  width: 155px;
+  /* z-index: 2; */
+  background: linear-gradient(rgba(111, 111, 111, 0.7), rgba(69, 50, 50, 0.7));
+  position: relative;
+  top: 90px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  align-items:center;
 }
-.current-block__input{
-  color:aliceblue;
-  display: flex;
-  flex-direction: column;
-width: 50%;
-justify-content: center;
-align-items:center;
+
+.btn__change-edit {
+  background: rgba(255, 255, 255, 0) linear-gradient(rgba(251, 148, 148, 0), rgba(157, 104, 104, 0));
+  cursor: pointer;
+  color: aliceblue
+}
+
+.btn__change-delete {
+  background: rgba(255, 255, 255, 0) linear-gradient(rgba(251, 148, 148, 0), rgba(157, 104, 104, 0));
+  cursor: pointer;
+  color: aliceblue
 }

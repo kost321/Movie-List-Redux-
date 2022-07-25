@@ -5,8 +5,6 @@ import { StyledEngineProvider } from "@mui/material/styles";
 import { store } from "./app/store";
 import App from "./App";
 
-
-
 import "./index.css";
 
 const container = document.getElementById("root");
@@ -19,4 +17,3 @@ root.render(
     </Provider>
   </StyledEngineProvider>
 );
-

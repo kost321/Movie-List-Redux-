@@ -6,17 +6,19 @@
 
 .header__logo {
     margin: 20px;
-    color: rgb(255, 0, 0);
+    color:  rgb(229, 9, 20);
     font-size: 34px;
     cursor: pointer;
 }
 
 .btn__add-movie {
     margin: 20px;
-    background: rgb(255, 0, 0) linear-gradient(rgba(255, 0, 0, 0.7), rgba(255, 9, 9, 0.474));
+    background: rgb(229, 9, 20) linear-gradient(rgba(196, 37, 37, 0.7), rgba(214, 30, 30, 0.474));
     border: none;
     color: rgb(255, 255, 255);
-    border-radius: 5px
+    border-radius: 5px;
+    cursor:auto;
+    cursor: pointer;
 }
 
 .container__search {
@@ -60,7 +62,12 @@
 }
 
 .btn__search {
+    cursor: pointer;
+    width: 10%;
     height: 35px;
     border-radius: 5px;
-
+    background: rgba(255, 164, 164, 0.626) linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.474));
+    border: none;
+    color: rgb(229, 9, 20);
 }
+

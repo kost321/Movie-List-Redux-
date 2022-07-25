@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { PaginationControlled } from "./film/movieList/components/pagination/PaginationControlled";
 import { HomePage } from "./film/movieList/components/movieList/MovieLsit";
 import { Header } from "./film/movieList/components/header/Header";
 import { MovieInfo } from "./film/movieList/components/currentMovieInfo/MovieInfo";
+import {Footer} from "./film/movieList/components/footer/Footer"
 
 import "./App.css";
 
@@ -20,7 +20,7 @@ function App() {
           <Route path="/movieInfo" element={<MovieInfo />} />
         </Routes>
       </Router>
-      <PaginationControlled />
+      <Footer/>
     </div>
   );
 }

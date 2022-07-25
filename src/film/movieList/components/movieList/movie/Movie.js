@@ -3,10 +3,11 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { currentMovie } from "../../../redux/MovieListSlice";
 import { ModalWindow } from "../ModalWindow/ModalWindow";
+import menuIcon from "../media/9023521_dots_three_circle_vertical_fill_icon.svg";
 
+import "./Movie.css";
 
-export const Movie = ({ id, title, img, genres, date }) => {
-
+export const Movie = ({ id, title, img, genres, date, rating }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [modalWindow, setModalWindow] = useState(false);
@@ -21,27 +22,36 @@ export const Movie = ({ id, title, img, genres, date }) => {
   }
 
   return (
-    <div>
-      <article className="block__movie-list" key={id}>
-        <div>{title}</div>
-        <div className="img__icone"></div>
+    <>
+      <div
+        className={modalWindow ? "icon__menu-open" : "icon__menu"}
+        onClick={(event) => changeStateModalWindow(event, id)}
+      >
+        <img src={menuIcon} alt="sortDown" />
+      </div>
+      {modalWindow ? <ModalWindow id={id} /> : null}
+
+      <div>
         <div>
           <img
             onClick={(event) => handleClick(event, id)}
             key={id}
-            className="movie_img"
+            className="movie__img"
             src={img}
             alt="sd"
           />
-          <div onClick={(event) => changeStateModalWindow(event, id)}>
-            modalWindow
-          </div>
-          {modalWindow ? <ModalWindow id={id} /> : null}
         </div>
-        <div>{title}</div>
-        <div>{genres.join(", ")}</div>
-        <div>{date}</div>
-      </article>
-    </div>
+      </div>
+      <div className="container__info">
+        <div className="block__info">
+          <div className="title__movie">{title}</div>
+          <div className="genres__movie">{genres.join(", ")}</div>
+        </div>
+        <div className="block__info-left">
+          <div className="date__movie">{date}</div>
+          <div className="rating__movie">{rating}</div>
+        </div>
+      </div>
+    </>
   );
 };

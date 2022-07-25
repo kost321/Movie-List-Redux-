@@ -4,7 +4,7 @@ import { movieSearch } from "../../redux/MovieListSlice";
 import { AddPost } from "./AddPost/AddPost";
 import { addPost } from "../../redux/MovieListSlice";
 import { movieFilter } from "../../redux/MovieListSlice";
-import searchIcone from "./media/search-interface-symbol.png";
+
 
 import "./header.css";
 
@@ -41,8 +41,8 @@ export function Header() {
   function handleClickEdit(event) {
     if (
       event.target.className === "btn__add-movie" ||
-      event.target.className === "btn__add__close-modal" ||
-      event.target.className === "container__input"
+      event.target.className === "modal-window__close_icon" ||
+      event.target.className === "container__modal-window"
     ) {
       event.preventDefault();
       setChangeAddWindow(!changeAddWindow);
@@ -86,7 +86,6 @@ export function Header() {
           Discover thousands of movies and series from all over the world.
         </div>
         <div className="block__search">
-          <img className="search__icon" src={searchIcone} alt="search" />
           <input
             className="search__input"
             type="text"
