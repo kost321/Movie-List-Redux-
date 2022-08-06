@@ -1,30 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 import closeIcon from "./media/icons8-close.svg";
-
+import { useDispatch } from "react-redux";
+import { addPost } from "../../../redux/MovieListSlice";
 import "./addpost.css";
 
-export const AddPost = ({
-  valueTitle,
-  setValueTitle,
-  valueRelease,
-  setValueRelease,
-  valueUrl,
-  setValueUrl,
-  valueOverview,
-  setValueOverview,
-  valueRuntime,
-  setValueRuntime,
-  onSubmit,
-  valueGenres,
-  setValueGenres,
-}) => {
+export const AddPost = ({ changeAddWindow, setChangeAddWindow }) => {
+  const [valueTitle, setValueTitle] = useState("");
+  const [valueRelease, setValueRelease] = useState("");
+  const [valueUrl, setValueUrl] = useState("");
+  const [valueOverview, setValueOverview] = useState("");
+  const [valueRuntime, setValueRuntime] = useState("");
+  const [valueGenres, setValueGenres] = useState("");
+  const dispatch = useDispatch();
+
+  const onSubmitAdd = () => {
+    const paramDispatch = {
+      valueTitle,
+      valueRelease,
+      valueUrl,
+      valueOverview,
+      valueRuntime,
+      valueGenres,
+    };
+    dispatch(addPost(paramDispatch));
+  };
+
+  function handleClickEdit(event) {
+    if (
+      event.target.className === "container__modal-window" ||
+      event.target.className === "modal-window__close_icon"
+    ) {
+      setChangeAddWindow(!changeAddWindow);
+      event.preventDefault();
+    } else if (event.target.className === "btn__submit-movie") {
+      onSubmitAdd();     
+      setChangeAddWindow(!changeAddWindow);
+    }
+  }
+
   return (
-    <div className="container__modal-window">
+    <div
+      className="container__modal-window"
+      onClick={(event) => handleClickEdit(event)}
+    >
       <div className="block__modal-window">
         <img
           className="modal-window__close_icon"
           src={closeIcon}
           alt="sortDown"
+          onClick={(event) => handleClickEdit(event)}
         />
         <div className="modal-window__title-text">ADD MOVIE</div>
         <div className="block__input">
@@ -55,7 +79,7 @@ export const AddPost = ({
               value={valueUrl}
               onChange={(event) => setValueUrl(event.target.value)}
             />
-          </div >
+          </div>
           <div className="current-block__input">
             <div className="input-name"> OVERVIEW</div>
 
@@ -85,7 +109,7 @@ export const AddPost = ({
               onChange={(event) => setValueGenres(event.target.value)}
             />
           </div>
-          <button className="btn__submit-movie " onSubmit={onSubmit}>
+          <button className="btn__submit-movie" onClick={onSubmitAdd}>
             SUBMIT
           </button>
         </div>

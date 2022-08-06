@@ -12,7 +12,6 @@ export const UsePagination = () => {
   let dispatch = useDispatch();
   const currentPage = useSelector((state) => state.movie.numberOfPage);
   const totalCount = useSelector((state) => state.movie.totalCount);
-
   let numberOfPages = Math.ceil(totalCount / COUNT_OF_ITEMS_ON_PAGE);
 
   function handleClickEdit(event, item) {

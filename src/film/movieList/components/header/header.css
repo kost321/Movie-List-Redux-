@@ -6,7 +6,7 @@
 
 .header__logo {
     margin: 20px;
-    color:  rgb(229, 9, 20);
+    color: rgb(229, 9, 20);
     font-size: 34px;
     cursor: pointer;
 }
@@ -17,7 +17,7 @@
     border: none;
     color: rgb(255, 255, 255);
     border-radius: 5px;
-    cursor:auto;
+    cursor: auto;
     cursor: pointer;
 }
 
@@ -70,4 +70,3 @@
     border: none;
     color: rgb(229, 9, 20);
 }
-

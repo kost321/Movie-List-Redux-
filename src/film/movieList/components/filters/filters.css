@@ -8,7 +8,7 @@
     margin-right: 40px;
     justify-content: space-between;
     width: 300px;
-    align-items:center;
+    align-items: center;
 }
 
 .container__filter {
@@ -21,32 +21,41 @@
     font-size: 13px;
     padding: 10px;
     border-radius: 5px;
+    cursor: pointer;
 }
+
 .icon-sort {
     height: 20px;
     width: 20px;
 }
-.btn__filter-complete{
+
+.btn__filter-complete {
     background: rgba(255, 164, 164, 0.626) linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.474));
     color: rgb(255, 0, 93);
     font-size: 13px;
     padding: 10px;
     border-radius: 5px;
+    cursor: pointer;
 }
-.block__filter{
+
+.block__filter {
     margin-left: 40px;
 }
-.btn__sort{
+
+.btn__sort {
     background-color: #4e4e4e;
     color: aliceblue;
     font-size: 13px;
     border-radius: 5px;
     width: 30%;
     height: 100%;
+    cursor: pointer;
 }
-.sort__text{
-    color:rgb(255, 255, 255);
+
+.sort__text {
+    color: rgb(255, 255, 255);
 }
-.icon-sort{
-    filter:  brightness(0) invert(1);
+
+.icon-sort {
+    filter: brightness(0) invert(1);
 }

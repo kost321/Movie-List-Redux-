@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./notFound.css";
+
 export const NotFound = () => {
-  return <div>NOT FOUND</div>;
+  return <div className="block-not_movie">NO MOVIE FOUND</div>;
 };

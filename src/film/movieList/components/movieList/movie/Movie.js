@@ -23,14 +23,15 @@ export const Movie = ({ id, title, img, genres, date, rating }) => {
 
   return (
     <>
-      <div
+    <div className="block__edit-menu">
+    <div
         className={modalWindow ? "icon__menu-open" : "icon__menu"}
         onClick={(event) => changeStateModalWindow(event, id)}
       >
         <img src={menuIcon} alt="sortDown" />
       </div>
       {modalWindow ? <ModalWindow id={id} /> : null}
-
+    </div>
       <div>
         <div>
           <img
@@ -45,7 +46,7 @@ export const Movie = ({ id, title, img, genres, date, rating }) => {
       <div className="container__info">
         <div className="block__info">
           <div className="title__movie">{title}</div>
-          <div className="genres__movie">{genres.join(", ")}</div>
+          <div className="genres__movie">{genres}</div>
         </div>
         <div className="block__info-left">
           <div className="date__movie">{date}</div>

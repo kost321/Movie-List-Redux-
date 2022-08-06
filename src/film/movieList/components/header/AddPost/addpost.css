@@ -25,7 +25,7 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    border-radius:10px;
+    border-radius: 10px;
 }
 
 .block__input {
@@ -43,7 +43,7 @@
     font-stretch: normal;
     font-size: 15px;
     display: flex;
-    align-items:baseline;
+    align-items: baseline;
     flex-direction: column;
 }
 
@@ -57,6 +57,7 @@
     color: aliceblue;
     font-size: 25px;
 }
+
 .input {
     width: 100%;
 }

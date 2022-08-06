@@ -1,34 +1,61 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { editPost } from "../../../redux/MovieListSlice";
 import { useSelector } from "react-redux";
 import closeIcon from "./media/icons8-close.svg";
 
 import "./editWindow.css";
 
-export const EditWindow = ({
-  id,
-  valueTitle,
-  setValueTitle,
-  valueRelease,
-  setValueRelease,
-  valueUrl,
-  setValueUrl,
-  valueOverview,
-  setValueOverview,
-  valueRuntime,
-  seValueRuntime,
-  onSubmit,
-  valueGenres,
-  seValueGenres,
-}) => {
+export const EditWindow = ({ setchangeEditWindow, changeEditWindow, id }) => {
+  const dispatch = useDispatch();
+  const [valueTitle, setValueTitle] = useState("");
+  const [valueRelease, setValueRelease] = useState("");
+  const [valueUrl, setValueUrl] = useState("");
+  const [valueOverview, setValueOverview] = useState("");
+  const [valueRuntime, seValueRuntime] = useState("");
+  const [valueGenres, seValueGenres] = useState("");
+
   const movieState = useSelector((state) => state.movie.posts);
   let currentMovieState = movieState.find((item) => item.id === id);
 
+  const onSubmit = () => {
+    setValueTitle("");
+    const paramDispatch = {
+      valueTitle,
+      valueRelease,
+      valueUrl,
+      valueOverview,
+      valueRuntime,
+      id,
+      valueGenres,
+    };
+    dispatch(editPost(paramDispatch));
+  };
+
+  function handleClickEdit(event) {
+    if (
+      event.target.className === "modal-window__close_icon-edit" ||
+      event.target.className === "container__modal-window"
+    ) {
+      setchangeEditWindow(!changeEditWindow);
+      event.preventDefault();
+    } else if (event.target.className === "btn__on-submit") {
+      onSubmit();
+      event.preventDefault();
+      setchangeEditWindow(!changeEditWindow);
+    }
+  }
+
   return (
-    <div className="container__modal-window">
+    <div
+      className="container__modal-window"
+      onClick={(event) => handleClickEdit(event)}
+    >
       <div className="block__modal-window">
         <img
           className="modal-window__close_icon-edit"
           src={closeIcon}
+          onClick={(event) => handleClickEdit(event)}
           alt="sortDown"
         />
         <div className="modal-window__title-text">ADD MOVIE</div>

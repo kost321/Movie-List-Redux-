@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getPosts } from "../../redux/MovieListSlice";
+import { Header } from "../header/Header";
 import { Filters } from "../filters/Filters";
 import { NotFound } from "./notFound/NotFound";
 import { Movie } from "./movie/Movie";
@@ -11,11 +12,12 @@ import "./movielist.css";
 export const HomePage = () => {
   const { posts } = useSelector((state) => state.movie);
   const loadFilms = useSelector((state) => state.movie.loading);
-
+  const totalCount = useSelector((state) => state.movie.totalCount);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getPosts());
   }, []);
+
 
   let stateOfPage;
   if (loadFilms === true) {
@@ -26,7 +28,7 @@ export const HomePage = () => {
         {posts.map((post) => (
           <article className="block__movie-list" key={post.id}>
             <Movie
-            key={post.id}
+              key={post.id}
               id={post.id}
               title={post.title}
               img={post.poster_path}
@@ -43,11 +45,17 @@ export const HomePage = () => {
   }
 
   return (
-    <div className="container__content">
-      <div className="line-gap"></div>
-      <Filters />
-      {stateOfPage}
-      <UsePagination />
+    <div>
+      <header className="App-header">
+        <Header />
+      </header>
+      <div className="container__content">
+        <div className="line-gap"></div>
+        <Filters />
+        <div className="block__count-movies">{totalCount} MOVIES FOUND</div>
+        {stateOfPage}
+        <UsePagination />
+      </div>
     </div>
   );
 };

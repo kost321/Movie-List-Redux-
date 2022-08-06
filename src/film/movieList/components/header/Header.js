@@ -2,21 +2,13 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { movieSearch } from "../../redux/MovieListSlice";
 import { AddPost } from "./AddPost/AddPost";
-import { addPost } from "../../redux/MovieListSlice";
 import { movieFilter } from "../../redux/MovieListSlice";
-
 
 import "./header.css";
 
 export function Header() {
   const [value, setValue] = useState("");
   const [changeAddWindow, setChangeAddWindow] = useState(false);
-  const [valueTitle, setValueTitle] = useState("");
-  const [valueRelease, setValueRelease] = useState("");
-  const [valueUrl, setValueUrl] = useState("");
-  const [valueOverview, setValueOverview] = useState("");
-  const [valueRuntime, setValueRuntime] = useState("");
-  const [valueGenres, setValueGenres] = useState("");
   const dispatch = useDispatch();
 
   const onSubmit = (event) => {
@@ -25,31 +17,12 @@ export function Header() {
     dispatch(movieSearch(value));
   };
 
-  const onSubmitAdd = () => {
-    setValueTitle("");
-    const paramDispatch = {
-      valueTitle,
-      valueRelease,
-      valueUrl,
-      valueOverview,
-      valueRuntime,
-      valueGenres,
-    };
-    dispatch(addPost(paramDispatch));
-  };
-
-  function handleClickEdit(event) {
-    if (
-      event.target.className === "btn__add-movie" ||
-      event.target.className === "modal-window__close_icon" ||
-      event.target.className === "container__modal-window"
-    ) {
-      event.preventDefault();
-      setChangeAddWindow(!changeAddWindow);
-    } else if (event.target.className === "btn__add__on-submit") {
-      onSubmitAdd();
-    }
+function handleClickEdit (event) {
+  if( event.target.className === "btn__add-movie") {
+    setChangeAddWindow(!changeAddWindow);
+    event.preventDefault();
   }
+}
 
   return (
     <>
@@ -62,24 +35,13 @@ export function Header() {
           onClick={(event) => handleClickEdit(event)}
         >
           + ADD MOVIE
-          {changeAddWindow ? (
-            <AddPost
-              valueTitle={valueTitle}
-              setValueTitle={setValueTitle}
-              valueRelease={valueRelease}
-              setValueRelease={setValueRelease}
-              valueUrl={valueUrl}
-              setValueUrl={setValueUrl}
-              valueOverview={valueOverview}
-              setValueOverview={setValueOverview}
-              valueRuntime={valueRuntime}
-              setValueRuntime={setValueRuntime}
-              onSubmit={onSubmit}
-              valueGenres={valueGenres}
-              setValueGenres={setValueGenres}
+        </button>
+        {changeAddWindow ? (
+            <AddPost 
+              changeAddWindow={changeAddWindow}
+              setChangeAddWindow={setChangeAddWindow}
             />
           ) : null}
-        </button>
       </nav>
       <div className="container__search">
         <div className="title-text">

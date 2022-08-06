@@ -1,9 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { COUNT_OF_ITEMS_ON_PAGE } from "../../../constants";
 import {
   getPostsFromServer,
-  getPostsFromServerFilter,
-  getPostsFromServerSort,
-  getPostsFromServerSearch,
   getPostFromServerById,
   deletePostsFromServer,
   editPostFromServer,
@@ -14,54 +12,25 @@ const initialState = {
   posts: [],
   loading: true,
   currentFilter: "",
-  currentSort: "",
-  currentCountMovie: 0,
   currentMovie: "",
   totalCount: 0,
   numberOfPage: 1,
 };
 
-export const getPosts = createAsyncThunk("posts/getPosts", async (count) => {
-  const response = await getPostsFromServer(count);
-  return response;
-});
-
-export const deletePost = createAsyncThunk(
-  "posts/deletePost",
-  async (id, { dispatch, getState }) => {
-    await deletePostsFromServer(id);
-    const currentState = getState();
-    const currentFilter = currentState.movie.currentFilter;
-
-    if (currentFilter === "") {
-      dispatch(getPosts());
-    } else {
-      dispatch(movieFilter(currentFilter));
-    }
-    return id;
-  }
-);
-
-export const editPost = createAsyncThunk(
-  "posts/editPost",
-  async (paramDispatch) => {
-    const searchMovie = await editPostFromServer(paramDispatch);
-    return searchMovie;
-  }
-);
-
-export const addPost = createAsyncThunk(
-  "posts/editPost",
-  async (paramDispatch) => {
-    const searchMovie = await addPostFromServer(paramDispatch);
-    return searchMovie;
+export const getPosts = createAsyncThunk(
+  "posts/getPosts",
+  async (offset) => {
+    const limit = COUNT_OF_ITEMS_ON_PAGE;
+    const response = await getPostsFromServer({limit, offset});
+    return response;
   }
 );
 
 export const movieFilter = createAsyncThunk(
   "posts/movieFilter",
   async (filter, { dispatch }) => {
-    const posts = await getPostsFromServerFilter(filter);
+    const limit = COUNT_OF_ITEMS_ON_PAGE;
+    const posts = await getPostsFromServer({filter,limit});
     dispatch(setCurrentFilter(filter));
     return posts;
   }
@@ -69,19 +38,22 @@ export const movieFilter = createAsyncThunk(
 
 export const movieSort = createAsyncThunk(
   "posts/movieSort",
-  async (typeOrder, { dispatch, getState }) => {
+  async (sortOrder, { getState }) => {
+    const limit = COUNT_OF_ITEMS_ON_PAGE;
     const currentState = getState();
-    const currentFilter = currentState.movie.currentFilter;
-    const sortMovie = await getPostsFromServerSort(typeOrder, currentFilter);
-    dispatch(setSort(typeOrder));
+    const filter = currentState.movie.currentFilter;
+    const sortMovie = await getPostsFromServer({sortOrder, limit, filter});
     return sortMovie;
   }
 );
 
 export const movieSearch = createAsyncThunk(
   "posts/movieSearch",
-  async (value) => {
-    const searchMovie = await getPostsFromServerSearch(value);
+  async (search, { getState }) => {
+    const limit = COUNT_OF_ITEMS_ON_PAGE;
+    const currentState = getState();
+    const filter = currentState.movie.currentFilter;
+    const searchMovie = await getPostsFromServer({search,limit,filter});
     return searchMovie;
   }
 );
@@ -94,15 +66,44 @@ export const currentMovie = createAsyncThunk(
   }
 );
 
+export const deletePost = createAsyncThunk(
+  "posts/deletePost",
+  async (id, { dispatch, getState }) => {
+    await deletePostsFromServer(id);
+    const currentState = getState();
+    const currentFilter = currentState.movie.currentFilter;
+    if (currentFilter === "") {
+      dispatch(getPosts());
+    } else {
+      dispatch(movieFilter(currentFilter));
+    }
+    return id;
+  }
+);
+
+export const editPost = createAsyncThunk(
+  "posts/editPost",
+  async (paramDispatchEdit) => {
+    const searchMovie = await editPostFromServer(paramDispatchEdit);
+    return searchMovie;
+  }
+);
+
+export const addPost = createAsyncThunk(
+  "posts/addPost",
+  async (paramDispatch) => {
+  
+    const searchMovie = await addPostFromServer(paramDispatch);
+    return searchMovie;
+  }
+);
+
 export const movieSlice = createSlice({
   name: "movie",
   initialState,
   reducers: {
     setCurrentFilter: (state, action) => {
       state.currentFilter = action.payload;
-    },
-    setSort: (state, action) => {
-      state.currentSort = action.payload;
     },
     setNumberOfPage: (state, action) => {
       state.numberOfPage = action.payload;
@@ -115,7 +116,6 @@ export const movieSlice = createSlice({
     [getPosts.fulfilled]: (state, action) => {
       state.loading = false;
       state.posts = action.payload.data;
-      state.currentCountMovie = action.payload.length;
       state.totalCount = action.payload.totalAmount;
     },
     [getPosts.rejected]: (state) => {
@@ -126,24 +126,23 @@ export const movieSlice = createSlice({
     },
     [movieFilter.fulfilled]: (state, action) => {
       state.loading = false;
-      state.posts = action.payload;
-      state.currentCountMovie = action.payload.length;
+      state.posts = action.payload.data;
+      state.totalCount = action.payload.totalAmount;
     },
     [movieSort.pending]: (state) => {
       state.loading = true;
     },
     [movieSort.fulfilled]: (state, action) => {
       state.loading = false;
-      state.posts = action.payload;
-      state.currentCountMovie = action.payload.length;
+      state.posts = action.payload.data;
     },
     [movieSearch.pending]: (state) => {
       state.loading = true;
     },
     [movieSearch.fulfilled]: (state, action) => {
       state.loading = false;
-      state.posts = action.payload;
-      state.currentCountMovie = action.payload.length;
+      state.posts = action.payload.data;
+      state.totalCount = action.payload.totalAmount;
     },
     [currentMovie.pending]: (state) => {
       state.loading = true;
@@ -151,12 +150,10 @@ export const movieSlice = createSlice({
     [currentMovie.fulfilled]: (state, action) => {
       state.loading = false;
       state.currentMovie = action.payload;
-      state.currentCountMovie = action.payload.length;
     },
     [deletePost.fulfilled]: (state, action) => {
       const index = state.posts.findIndex((item) => item.id === action.payload);
       state.posts.splice(index, 1);
-      state.currentCountMovie = action.payload.length;
     },
     [editPost.fulfilled]: (state, action) => {
       const index = state.posts.findIndex(
@@ -165,7 +162,7 @@ export const movieSlice = createSlice({
       state.posts[index] = action.payload;
     },
     [addPost.fulfilled]: (state, action) => {
-      state.posts.push(action.payload);
+      state.posts.unshift(action.payload);
     },
   },
 });
