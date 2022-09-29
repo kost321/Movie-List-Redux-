@@ -1,18 +1,23 @@
 import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { MovieList } from "./movieList/components/MovieList/MovieList"
+import { CurrentMovieInfo } from "./movieList/components/CurrentMovieInfo/CurrentMovieInfo";
+import Footer from "./movieList/components/Footer";
 
-import { Counter } from "./features/counter/Counter";
 import "./App.css";
-import { FieldInput } from "./features/input/FieldInput";
-import { AddTodoForm } from "./features/todolist/AddTodoForm";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <Counter />
-        <FieldInput />
-        <AddTodoForm />
-      </header>
+      <Router>
+        <Routes>
+          <Route path="/" element={<MovieList />} />
+        </Routes>
+        <Routes>
+          <Route path="/movieInfo" element={<CurrentMovieInfo />} />
+        </Routes>
+      </Router>
+      <Footer />
     </div>
   );
 }
