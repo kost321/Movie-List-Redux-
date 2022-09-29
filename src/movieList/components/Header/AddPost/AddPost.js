@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { addPost } from "../../../redux/MovieListSlice";
 import closeIcon from "./media/icons8-close.svg";
 
-import "./addPost.css";
+import "./addpost.css";
 
 export const AddPost = ({ changeAddWindow, setChangeAddWindow }) => {
   const [valueTitle, setValueTitle] = useState("");

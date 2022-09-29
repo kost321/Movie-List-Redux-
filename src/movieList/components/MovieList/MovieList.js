@@ -7,7 +7,7 @@ import { PageNotFound } from "../PageNotFound/PageNotFound";
 import { Movie } from "./Movie/Movie";
 import { UsePagination } from "../UsePagination/UsePagination";
 
-import "./movieList.css"
+import "./movielist.css"
 
 export const MovieList = () => {
   const { posts } = useSelector((state) => state.movie);
