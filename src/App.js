@@ -1,10 +1,10 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { MovieList } from "./movieList/components/MovieList/MovieList"
-import { CurrentMovieInfo } from "./movieList/components/CurrentMovieInfo/CurrentMovieInfo";
-import Footer from "./movieList/components/Footer";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { MovieList } from './movieList/components/MovieList/MovieList'
+import { CurrentMovieInfo } from './movieList/components/CurrentMovieInfo/CurrentMovieInfo';
+import Footer from './movieList/components/Footer';
 
-import "./App.css";
+import './App.css';
 
 function App() {
   return (
