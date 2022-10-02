@@ -1,17 +1,23 @@
-import { React } from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { MovieList } from './movieList/components/MovieList/MovieList'
+import { CurrentMovieInfo } from './movieList/components/CurrentMovieInfo/CurrentMovieInfo';
+import Footer from './movieList/components/Footer';
+
 import './App.css';
-import { FieldInput } from './features/input/FieldInput';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <FieldInput />
-      </header>
+      <Router>
+        <Routes>
+          <Route path="/" element={<MovieList />} />
+        </Routes>
+        <Routes>
+          <Route path="/movieInfo" element={<CurrentMovieInfo />} />
+        </Routes>
+      </Router>
+      <Footer />
     </div>
   );
 }
